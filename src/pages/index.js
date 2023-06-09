@@ -1,23 +1,21 @@
-"use client";
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
-import user from "../Services/user"
+import user from "../Services/user";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 
 const Index = () => {
-  
   const [fields, setFields] = useState({});
   const [errors, setErrors] = useState({});
   const [loader, setLoader] = useState(false);
   const [alert, setAlert] = useState("");
   const dispatch = useDispatch();
-  const router= useRouter()
+  const router = useRouter();
 
   const handleChange = (e, field) => {
     setFields({ ...fields, [field]: e.target.value });
@@ -34,12 +32,11 @@ const Index = () => {
         console.log(data);
         let res = data.data;
         if (res.status) {
-          console.log(data);
-          localStorage.setItem("mobile", data.data.data.mobile);
-          localStorage.setItem("token", data.data.data.token);
-          localStorage.setItem("email", data.data.data.email);
-          localStorage.setItem("name", data.data.data.name);
-          localStorage.setItem("user_id", data.data.data.user_id);
+         window !== 'undefined' && sessionStorage.setItem("mobile", data.data.data.mobile);
+         window !== 'undefined' && sessionStorage.setItem("token", data.data.data.token);
+         window !== 'undefined' &&  sessionStorage.setItem("email", data.data.data.email);
+         window !== 'undefined' && sessionStorage.setItem("name", data.data.data.name);
+         window !== 'undefined' && sessionStorage.setItem("user_id", data.data.data.user_id);
           let payload = {
             token: data.data.data.token,
             mobile: data.data.data.mobile,
@@ -47,9 +44,9 @@ const Index = () => {
             email: data.data.data.email,
             name: data.data.data.name,
           };
+          
           dispatch({ type: "login", ...payload });
           setLoader(false);
-
           // if (data.data.data.token) {
           //   console.log("hello");
           //   redirect("/admin/dashboard");
@@ -71,7 +68,7 @@ const Index = () => {
       });
   };
 
-  if(typeof window !== 'undefined' && localStorage.getItem("token")){
+  if(typeof window !== 'undefined' && sessionStorage.getItem("token")){
     router.push("/admin/dashboard");
   }
 
@@ -87,7 +84,6 @@ const Index = () => {
                   <p className="text-black-50">Sign In to your account</p>
 
                   <form onSubmit={handleSubmit}>
-
                     <InputGroup className="mb-3">
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faUser} fixedWidth />
@@ -136,8 +132,7 @@ const Index = () => {
                 className="bg-primary text-white d-flex align-items-center justify-content-center p-5"
               >
                 <div className="text-center">
-                  <h2>Seeding-Justice</h2>
-
+                  <h2>Mitiz-Blogs</h2>
                   <Link href="/register">
                     <button
                       className="btn btn-lg btn-outline-light mt-3"

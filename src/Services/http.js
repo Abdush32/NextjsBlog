@@ -3,8 +3,8 @@ import store from "../Redux/store";
 import { toast } from "react-toastify";
 
 let apiUrl;
-if (typeof window !== 'undefined' && document.URL.includes("vikaslocalhost")) {
-  apiUrl = "https://blogmitiz.readandfeel.in/api/v1/";
+if (typeof window !== 'undefined' && document.URL.includes("localhost")) {
+  apiUrl = "https://blogmitiz.readandfeel.in/api/v1/"; 
 } else {  
   apiUrl = "https://blogmitiz.readandfeel.in/api/v1/";
 }
@@ -16,11 +16,12 @@ const http = axios.create({
 });
 http.interceptors.request.use(
   (config) => {
-    if (store.getState().token) {
+    if (sessionStorage.getItem("token")) {
       config.headers.common["Authorization"] = `Bearer  ${
-        store.getState().token
+        sessionStorage.getItem("token")
       }`;
     }
+    console.log(config);
     return config;
   },
   (error) => {
@@ -34,9 +35,10 @@ http.interceptors.response.use(
     return response;
   },
   (error) => {
+    console.log(error);
     if (error.response.status === 401) {
-      localStorage.clear();
-      window.location.href = "/";
+      sessionStorage.clear();
+      // typeof window !== 'undefined' && window.location.href = "/";
     } else if (error.response.status === 404) {
       toast.error(error.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -44,7 +46,7 @@ http.interceptors.response.use(
     } else if (error.response.status === 500) {
       toast.error(error.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
-      });
+      }); 
     } else if (error.response.status === 403) {
       toast.error(error.message, {
         position: toast.POSITION.BOTTOM_RIGHT,

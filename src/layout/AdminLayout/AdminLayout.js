@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import Head from "next/head";
 import Sidebar, { SidebarOverlay } from "@layout/AdminLayout/Sidebar/Sidebar";
-import Header from "./Header/Header";
-import Footer from "./Footer/Footer";
+import Header from "../../layout/AdminLayout/Header/Header";
+import Footer from "../../layout/AdminLayout/Footer/Footer";
 import { Container } from "react-bootstrap";
 import { useRouter } from 'next/router'
 
@@ -40,7 +40,7 @@ const AdminLayout = ({ children }) => {
     }
   }, [setIsShowSidebarMd]);
 
-  if (typeof window !== "undefined" && localStorage.getItem("token")) {
+  // if (typeof window !== "undefined" && localStorage.getItem("token")) {
     return (
       <>
         <Head>
@@ -70,9 +70,9 @@ const AdminLayout = ({ children }) => {
         />
       </>
     );
-  } else {
-    router.push("/");
-  }
+  // } else {
+  //   router.push("/");
+  // }
 };
 
 export default AdminLayout;

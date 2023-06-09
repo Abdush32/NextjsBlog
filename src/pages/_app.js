@@ -19,11 +19,12 @@ function MyApp({ Component, pageProps }) {
   // to ensure that the auto-generated ids are consistent between the server and client.
   // https://react-bootstrap.github.io/getting-started/server-side-rendering/
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return <SSRProvider>
-    <Provider store={store}>
+  return   <Provider store={store}>
+  <SSRProvider>
     <Component {...pageProps} />
-    </Provider>
     </SSRProvider>
+    </Provider>
+
 }
 
 export default MyApp
