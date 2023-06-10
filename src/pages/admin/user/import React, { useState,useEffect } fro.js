@@ -1,7 +1,6 @@
 import React, { useState,useEffect } from "react";
 import AdminLayout from "../../../layout/AdminLayout/AdminLayout";
 import { Card, CardBody } from "reactstrap";
-import store from "../../../Redux/store";
 import {
   BarElement,
   CategoryScale,
@@ -29,6 +28,7 @@ Chart.register(
 
 const Index = (props) => {
   console.log("ABDUSH BRO", props.data);
+
   const [loader, setLoader] = useState(false);
 
 const getUser = () =>{
@@ -106,16 +106,23 @@ export default Index;
 export async function getServerSideProps() {
   // Fetch data from external API
   let data = {}
-  userdata
-  .list()
+  let config = {
+    method: 'get',
+    maxBodyLength: Infinity,
+    url: 'https://blogmitiz.readandfeel.in/api/v1/user/get_users',
+    headers: { 
+      'Accept': 'application/json', 
+      'Authorization': 'Bearer 7|VeecxWMvvBSi4rgW3rHwj6uOI0mk19V1w5DCrRUR'
+    }
+  };
+  
+  axios.request(config)
   .then((response) => {
-   
-    data = JSON.stringify(response.data)
+     data = JSON.stringify(response.data)
     console.log(JSON.stringify(response.data));
   })
-  .catch(function (error) {
-    console.log("errors", error.message);
-    // data = {};
+  .catch((error) => {
+    console.log(error);
   });
   return { props: { data } }
 }

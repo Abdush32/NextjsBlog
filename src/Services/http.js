@@ -17,8 +17,8 @@ const http = axios.create({
 http.interceptors.request.use(
   (config) => {
     if (sessionStorage.getItem("token")) {
-      config.headers.common["Authorization"] = `Bearer  ${
-        sessionStorage.getItem("token")
+      config.headers.common["Authorization"] =  `Bearer  ${
+        store.getState().token
       }`;
     }
     console.log(config);
