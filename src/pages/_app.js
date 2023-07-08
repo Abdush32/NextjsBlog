@@ -7,6 +7,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import { SSRProvider } from 'react-bootstrap'
 import { Provider } from 'react-redux'
 import store from "../Redux/store"
+import { SessionProvider, useSession } from "next-auth/react";
 
 // You change this configuration value to false so that the Font Awesome core SVG library
 // will not try and insert <style> elements into the <head> of the page.
@@ -14,12 +15,13 @@ import store from "../Redux/store"
 // See https://fontawesome.com/v6/docs/web/use-with/react/use-with#next-js
 config.autoAddCss = false
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component,pageProps: { session, ...pageProps },}) {
+  
   // In server-side rendered applications, a SSRProvider must wrap the application in order
   // to ensure that the auto-generated ids are consistent between the server and client.
   // https://react-bootstrap.github.io/getting-started/server-side-rendering/
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return   <Provider store={store}>
+  return <Provider store={store}>
   <SSRProvider>
     <Component {...pageProps} />
     </SSRProvider>

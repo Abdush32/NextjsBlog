@@ -1,7 +1,8 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import AdminLayout from "../../../layout/AdminLayout/AdminLayout";
 import { Card, CardBody } from "reactstrap";
 import store from "../../../Redux/store";
+import Cookies from "js-cookie";
 import {
   BarElement,
   CategoryScale,
@@ -12,10 +13,10 @@ import {
   PointElement,
   Tooltip,
 } from "chart.js";
-import userdata from "../../../Services/user";
+import userdata from "../../api/user";
 import { Table } from "react-bootstrap";
 import User from "./User";
-const axios = require('axios');
+const axios = require("axios");
 
 Chart.register(
   CategoryScale,
@@ -31,28 +32,23 @@ const Index = (props) => {
   console.log("ABDUSH BRO", props.data);
   const [loader, setLoader] = useState(false);
 
-const getUser = () =>{
-  userdata
-    .list()
-    .then((res) => {
-      console.log(res);
-      console.log("RESPONSE", res);
-      if (res.data.status) {
-        
-      }
-    })
-    .catch(function (error) {
-      console.log("errors", error.message);
-      // data = {};
-    });
-}
+  const getUser = () => {
+    userdata
+      .list()
+      .then((res) => {
+        console.log("RESPONSE", res);
+        if (res.data.status) {
+        }
+      })
+      .catch(function (error) {
+        console.log("errors", error.message);
+        // data = {};
+      });
+  };
 
-
-useEffect(() => {
-  // getUser()
-}, [])
-
-
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <AdminLayout>
@@ -101,23 +97,48 @@ useEffect(() => {
   );
 };
 
-
 export default Index;
+// export async function getServerSideProps() {
+//   // Fetch data from external API
+//   let data = {};
+//   userdata
+//     .list()
+//     .then((response) => {
+//       console.log("mitiz",response);
+//     })
+//     .catch(function (error) {
+//       console.log("errors", error.message);
+//       // data = {};
+//     });
+//   return { props: { data } };
+// }
+
 export async function getServerSideProps() {
   // Fetch data from external API
-  let data = {}
-  userdata
-  .list()
-  .then((response) => {
-   
-    data = JSON.stringify(response.data)
-    console.log(JSON.stringify(response.data));
+  // console.log("Hello World");
+  let data = {};
+  // let config = {
+  //   method: "get",
+  //   maxBodyLength: Infinity,
+  //   url: ,
+  //   headers: {
+  //     Accept: "application/json",
+  //     Authorization: `Bearer 203|R3mFBPg0HIgPueAUQfEm0It1cj9b6pDF36CDJOUL`,
+  //   },
+  // };
+
+  
+  axios.get("https://blogmitiz.readandfeel.in/api/v1/user/get_users",{},{
+    Accept: "application/json",
+    Authorization: `Bearer 203|R3mFBPg0HIgPueAUQfEm0It1cj9b6pDF36CDJOUL`,
   })
-  .catch(function (error) {
-    console.log("errors", error.message);
-    // data = {};
-  });
-  return { props: { data } }
+    .then((response) => {
+console.log(response.data);
+      data = JSON.stringify(response.data);
+      // console.log(JSON.stringify("RESPONSE", response.data));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return { props: { data } };
 }
-
-

@@ -16,7 +16,7 @@ export default function Sidebar({ isShow, isShowMd }) {
 
   // On first time load only
   useEffect(() => {
-    if (localStorage.getItem("isNarrow")) {
+    if (typeof window !== 'undefined' && localStorage.getItem("isNarrow")) {
       setIsNarrow(localStorage.getItem("isNarrow") === "true");
     }
   }, [setIsNarrow]);

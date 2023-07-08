@@ -3,11 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
-import user from "../Services/user";
+import user from "../pages/api/user"
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-
+import Cookies from 'js-cookie';
 
 const Index = () => {
   const [fields, setFields] = useState({});
@@ -32,11 +32,13 @@ const Index = () => {
         console.log(data);
         let res = data.data;
         if (res.status) {
-         window !== 'undefined' && sessionStorage.setItem("mobile", data.data.data.mobile);
-         window !== 'undefined' && sessionStorage.setItem("token", data.data.data.token);
-         window !== 'undefined' &&  sessionStorage.setItem("email", data.data.data.email);
-         window !== 'undefined' && sessionStorage.setItem("name", data.data.data.name);
-         window !== 'undefined' && sessionStorage.setItem("user_id", data.data.data.user_id);
+         typeof window !== 'undefined' && sessionStorage.setItem("mobile", data.data.data.mobile);
+         typeof window !== 'undefined' && sessionStorage.setItem("token", data.data.data.token);
+         typeof window !== 'undefined' &&  sessionStorage.setItem("email", data.data.data.email);
+         typeof window !== 'undefined' && sessionStorage.setItem("name", data.data.data.name);
+         typeof window !== 'undefined' && sessionStorage.setItem("user_id", data.data.data.user_id);
+         console.log(data.data.data.token);
+         Cookies.set('token', data.data.data.token);
           let payload = {
             token: data.data.data.token,
             mobile: data.data.data.mobile,

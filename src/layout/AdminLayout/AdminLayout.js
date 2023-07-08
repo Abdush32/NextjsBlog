@@ -18,7 +18,7 @@ const AdminLayout = ({ children }) => {
 
   const toggleIsShowSidebarMd = () => {
     const newValue = !isShowSidebarMd;
-    localStorage.setItem("isShowSidebarMd", newValue ? "true" : "false");
+    typeof window !== 'undefined' && localStorage.setItem("isShowSidebarMd", newValue ? "true" : "false");
     setIsShowSidebarMd(newValue);
   };
 
@@ -35,8 +35,8 @@ const AdminLayout = ({ children }) => {
 
   // On first time load only
   useEffect(() => {
-    if (localStorage.getItem("isShowSidebarMd")) {
-      setIsShowSidebarMd(localStorage.getItem("isShowSidebarMd") === "true");
+    if (typeof window !== 'undefined' && localStorage.getItem("isShowSidebarMd")) {
+      setIsShowSidebarMd(typeof window !== 'undefined' && localStorage.getItem("isShowSidebarMd") === "true");
     }
   }, [setIsShowSidebarMd]);
 
