@@ -1,7 +1,7 @@
 // const baseUrl = "https://blogmitiz.readandfeel.in/api/v1";
 const baseUrl2 = "https://blogmitiz.readandfeel.in/api/v1";
 
-const localdata = JSON.parse(typeof window !== 'undefined' && sessionStorage.getItem("token"));
+const localdata = JSON.parse(typeof window !== 'undefined' && localStorage.getItem("token"));
 const token = localdata !== null && localdata.token ? localdata.token : null;
 
 console.log(localdata);

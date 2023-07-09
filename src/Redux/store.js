@@ -12,31 +12,31 @@ let initialState = {
   apiUrl: apiUrl,
   baseUrl: baseUrl,
 };
-if (typeof window !== 'undefined' && sessionStorage.getItem("token")) {
-  initialState = { ...initialState, token: typeof window !== 'undefined' && sessionStorage.getItem("token") };
+if (typeof window !== 'undefined' && localStorage.getItem("token")) {
+  initialState = { ...initialState, token: typeof window !== 'undefined' && localStorage.getItem("token") };
 }
-if (typeof window !== 'undefined' && sessionStorage.getItem("mobile")) {
+if (typeof window !== 'undefined' && localStorage.getItem("mobile")) {
 initialState = {
     ...initialState,
-    mobile: typeof window !== 'undefined' && sessionStorage.getItem("mobile"),
+    mobile: typeof window !== 'undefined' && localStorage.getItem("mobile"),
   };
 }
-if (typeof window !== 'undefined' && sessionStorage.getItem("user_id")) {
+if (typeof window !== 'undefined' && localStorage.getItem("user_id")) {
   initialState = {
     ...initialState,
-    user_id: typeof window !== 'undefined' && sessionStorage.getItem("user_id"),
+    user_id: typeof window !== 'undefined' && localStorage.getItem("user_id"),
   };
 }
-if (typeof window !== 'undefined' && sessionStorage.getItem("email")) {
+if (typeof window !== 'undefined' && localStorage.getItem("email")) {
   initialState = {
     ...initialState,
-    email: typeof window !== 'undefined' && sessionStorage.getItem("email"),
+    email: typeof window !== 'undefined' && localStorage.getItem("email"),
   };
 }
-if (typeof window !== 'undefined' && sessionStorage.getItem("name")) {
+if (typeof window !== 'undefined' && localStorage.getItem("name")) {
   initialState = {
     ...initialState,
-    name: typeof window !== 'undefined' && sessionStorage.getItem("name"),
+    name: typeof window !== 'undefined' && localStorage.getItem("name"),
   };
 }
 
@@ -47,7 +47,7 @@ const changeState = (state = initialState, { type, ...rest }) => {
     case "login":
       return {state, ...rest };
     case "logout":
-      typeof window !== 'undefined' && sessionStorage.clear();
+      typeof window !== 'undefined' && localStorage.clear();
       const initialState = {
         apiUrl: apiUrl,
         baseUrl: baseUrl,

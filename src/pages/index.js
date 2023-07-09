@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Cookies from 'js-cookie';
 
+
 const Index = () => {
   const [fields, setFields] = useState({});
   const [errors, setErrors] = useState({});
@@ -32,12 +33,11 @@ const Index = () => {
         console.log(data);
         let res = data.data;
         if (res.status) {
-         typeof window !== 'undefined' && sessionStorage.setItem("mobile", data.data.data.mobile);
-         typeof window !== 'undefined' && sessionStorage.setItem("token", data.data.data.token);
-         typeof window !== 'undefined' &&  sessionStorage.setItem("email", data.data.data.email);
-         typeof window !== 'undefined' && sessionStorage.setItem("name", data.data.data.name);
-         typeof window !== 'undefined' && sessionStorage.setItem("user_id", data.data.data.user_id);
-         console.log(data.data.data.token);
+         typeof window !== 'undefined' && localStorage.setItem("mobile", data.data.data.mobile);
+         typeof window !== 'undefined' && localStorage.setItem("token", data.data.data.token);
+         typeof window !== 'undefined' &&  localStorage.setItem("email", data.data.data.email);
+         typeof window !== 'undefined' && localStorage.setItem("name", data.data.data.name);
+         typeof window !== 'undefined' && localStorage.setItem("user_id", data.data.data.user_id);
          Cookies.set('token', data.data.data.token);
           let payload = {
             token: data.data.data.token,
@@ -70,7 +70,7 @@ const Index = () => {
       });
   };
 
-  if(typeof window !== 'undefined' && sessionStorage.getItem("token")){
+  if(typeof window !== 'undefined' && localStorage.getItem("token")){
     router.push("/admin/dashboard");
   }
 

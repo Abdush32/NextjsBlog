@@ -16,7 +16,7 @@ const http = axios.create({
 });
 http.interceptors.request.use(
   (config) => {
-    if (sessionStorage.getItem("token")) {
+    if (localStorage.getItem("token")) {
       config.headers.common["Authorization"] =  `Bearer  ${
         store.getState().token
       }`;
@@ -37,7 +37,7 @@ http.interceptors.response.use(
   (error) => {
     console.log(error);
     if (error.response.status === 401) {
-      sessionStorage.clear();
+      localStorage.clear();
       // typeof window !== 'undefined' && window.location.href = "/";
     } else if (error.response.status === 404) {
       toast.error(error.message, {

@@ -8,6 +8,7 @@ import { SSRProvider } from 'react-bootstrap'
 import { Provider } from 'react-redux'
 import store from "../Redux/store"
 import { SessionProvider, useSession } from "next-auth/react";
+import { AuthCheck } from '../middleware/isAuthenticated'
 
 // You change this configuration value to false so that the Font Awesome core SVG library
 // will not try and insert <style> elements into the <head> of the page.
@@ -23,7 +24,9 @@ function MyApp({ Component,pageProps: { session, ...pageProps },}) {
   // eslint-disable-next-line react/jsx-props-no-spreading
   return <Provider store={store}>
   <SSRProvider>
+  {/* <AuthCheck> */}
     <Component {...pageProps} />
+    {/* </AuthCheck> */}
     </SSRProvider>
     </Provider>
 

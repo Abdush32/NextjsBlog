@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AdminLayout from "../../../layout/AdminLayout/AdminLayout";
 import { Card, CardBody } from "reactstrap";
-import store from "../../../Redux/store";
-import Cookies from "js-cookie";
+
 import {
   BarElement,
   CategoryScale,
@@ -16,8 +15,6 @@ import {
 import userdata from "../../api/user";
 import { Table } from "react-bootstrap";
 import User from "./User";
-const axios = require("axios");
-
 Chart.register(
   CategoryScale,
   LinearScale,
@@ -27,29 +24,7 @@ Chart.register(
   Tooltip,
   Filler
 );
-
 const Index = (props) => {
-  console.log("ABDUSH BRO", props.data);
-  const [loader, setLoader] = useState(false);
-
-  const getUser = () => {
-    userdata
-      .list()
-      .then((res) => {
-        console.log("RESPONSE", res);
-        if (res.data.status) {
-        }
-      })
-      .catch(function (error) {
-        console.log("errors", error.message);
-        // data = {};
-      });
-  };
-
-  useEffect(() => {
-    getUser();
-  }, []);
-
   return (
     <AdminLayout>
       <Card className="p-3" style={{ minHeight: "70vh" }}>
@@ -68,9 +43,6 @@ const Index = (props) => {
                 </th>
                 <th scope="col" className="border-top-0">
                   Phone
-                </th>
-                <th scope="col">
-                  <span className="border-top-0 sortable sort">Added On</span>
                 </th>
                 <th scope="col" className="border-top-0">
                   Action
@@ -98,47 +70,15 @@ const Index = (props) => {
 };
 
 export default Index;
-// export async function getServerSideProps() {
-//   // Fetch data from external API
-//   let data = {};
-//   userdata
-//     .list()
-//     .then((response) => {
-//       console.log("mitiz",response);
-//     })
-//     .catch(function (error) {
-//       console.log("errors", error.message);
-//       // data = {};
-//     });
-//   return { props: { data } };
-// }
 
-export async function getServerSideProps() {
-  // Fetch data from external API
-  // console.log("Hello World");
-  let data = {};
-  // let config = {
-  //   method: "get",
-  //   maxBodyLength: Infinity,
-  //   url: ,
-  //   headers: {
-  //     Accept: "application/json",
-  //     Authorization: `Bearer 203|R3mFBPg0HIgPueAUQfEm0It1cj9b6pDF36CDJOUL`,
-  //   },
-  // };
+export async function getServerSideProps(ctx) {
+  try {
+    const response = await userdata.list(ctx);
+    const data = response.data.data.users;
 
-  
-  axios.get("https://blogmitiz.readandfeel.in/api/v1/user/get_users",{},{
-    Accept: "application/json",
-    Authorization: `Bearer 203|R3mFBPg0HIgPueAUQfEm0It1cj9b6pDF36CDJOUL`,
-  })
-    .then((response) => {
-console.log(response.data);
-      data = JSON.stringify(response.data);
-      // console.log(JSON.stringify("RESPONSE", response.data));
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  return { props: { data } };
+    return { props: { data } };
+  } catch (error) {
+    console.log("errors", error);
+    return { props: { data: {} } };
+  }
 }
